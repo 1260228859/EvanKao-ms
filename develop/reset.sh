@@ -18,7 +18,7 @@ fi
 
 PGDATABASE=postgres
 export PGDATABASE
-#ensure ">>> starting db/consul/zipkin" docker-compose up --remove-orphans -d db consul zipkin
+ensure ">>> starting db/consul/zipkin" docker-compose up --remove-orphans -d db consul zipkin
 waituntil 10 ">>> connect postgres" docker-compose exec db pg_isready
 # user_server must start after role/region_server
 ensure ">>> starting services" docker-compose up -d
