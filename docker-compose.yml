@@ -1,5 +1,5 @@
-version: '3'
-services:
+version: '3' # 标示语法版本
+services:  # 多个容器的集合
   user_server:
     build: 
       context: .
@@ -12,11 +12,11 @@ services:
     volumes:
       - "${PWD}/user_service:/service"
       - "${PWD}/sanicms:/service/sanicms"
-    ports:
+    ports: # 对外暴露的端口
       - "8030:8030"
     networks:
       - sanic-network
-    environment:
+    environment:  # 环境变量配置 主要用于settings文件中的读取默认的环境变量
       POSTGRES_SERVICE_DB_NAME: postgres
       POSTGRES_SERVICE_USER: postgres
       POSTGRES_SERVICE_HOST: db
@@ -24,15 +24,84 @@ services:
       ACCESS_CONTROL_ALLOW_ORIGIN: "*"
       ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
       ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
-      ZIPKIN_SERVER: 'http://140.143.22:9411/api/v1/spans'
+      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'  # 这里使用别名链接了link
       CONSUL_AGENT_HOST: 'consul'
       CONSUL_AGENT_PORT: 8500
       #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
-    depends_on:
+    depends_on: # 解决容器间相互依赖的问题 必须先启动zipkin
       - "db"
       - "role_server"
-    command: ["python", "-m", "server"]
+      - "zipkin"
+    command: ["python", "-m", "server"]    # 容器构建完毕默认执行的命令
     #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
+
+#  order_server:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        - service=order_server
+#    links:
+#      - db
+#      - zipkin
+#    volumes:
+#      - "${PWD}/user_service:/service"
+#      - "${PWD}/sanicms:/service/sanicms"
+#    ports:
+#      - "8030:8030"
+#    networks:
+#      - sanic-network
+#    environment:
+#      POSTGRES_SERVICE_DB_NAME: postgres
+#      POSTGRES_SERVICE_USER: postgres
+#      POSTGRES_SERVICE_HOST: db
+#      POSTGRES_SERVICE_PORT: 5432
+#      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+#      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
+#      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
+#      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
+#      CONSUL_AGENT_HOST: 'consul'
+#      CONSUL_AGENT_PORT: 8500
+#      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
+#    depends_on:
+#      - "db"
+#      - "role_server"
+#    command: ["python", "-m", "server"]
+#    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
+#
+#  pay_server:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        - service=pay_server
+#    links:
+#      - db
+#      - zipkin
+#    volumes:
+#      - "${PWD}/user_service:/service"
+#      - "${PWD}/sanicms:/service/sanicms"
+#    ports:
+#      - "8030:8030"
+#    networks:
+#      - sanic-network
+#    environment:
+#      POSTGRES_SERVICE_DB_NAME: postgres
+#      POSTGRES_SERVICE_USER: postgres
+#      POSTGRES_SERVICE_HOST: db
+#      POSTGRES_SERVICE_PORT: 5432
+#      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+#      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
+#      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
+#      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
+#      CONSUL_AGENT_HOST: 'consul'
+#      CONSUL_AGENT_PORT: 8500
+#      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
+#    depends_on:
+#      - "db"
+#      - "role_server"
+#    command: ["python", "-m", "server"]
+#    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
   region_server:
     build: 
@@ -63,6 +132,7 @@ services:
       #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
     depends_on:
       - "db"
+      - "zipkin"
     command: ["python", "-m", "server"]
     #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
@@ -96,6 +166,7 @@ services:
     depends_on:
       - "db"
       - "region_server"
+      - "zipkin"
     command: ["python", "-m", "server"]
     #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
