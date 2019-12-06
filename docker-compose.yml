@@ -31,7 +31,7 @@ services:  # 多个容器的集合
     depends_on: # 解决容器间相互依赖的问题 必须先启动zipkin
       - "db"
       - "role_server"
-      - "zipkin"
+      - "zipkin"  # 多余 脚本中已经先启用了
     command: ["python", "-m", "server"]    # 容器构建完毕默认执行的命令
     #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
