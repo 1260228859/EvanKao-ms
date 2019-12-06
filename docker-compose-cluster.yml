@@ -1,0 +1,42 @@
+version: '3'
+services:
+  db:
+    image: "postgres:10.6-alpine"
+    ports:
+      - "55432:5432"
+    networks:
+      - sanic-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  zipkin:
+    image: "openzipkin/zipkin:2.4.2"
+    ports:
+      - "9410:9410"
+      - "9411:9411"
+    networks:
+      - sanic-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  swagger:
+    image: "swaggerapi/swagger-ui:v3.0.5"
+    ports:
+      - "8090:8080"
+    networks:
+      - sanic-network
+    environment:
+      API_URL: "http://localhost:8000/openapi/spec.json"
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  sanic-network:
+    external:
+        name: ms_sanic-network
