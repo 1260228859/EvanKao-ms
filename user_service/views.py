@@ -10,7 +10,7 @@ from sanicms import doc
 from sanicms.utils import *
 from sanicms.exception import ServerError
 from sanicms.loggers import logger
-from models import *
+from .models import *
 
 _logger = logging.getLogger('sanic')
 

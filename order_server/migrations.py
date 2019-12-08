@@ -6,11 +6,11 @@ from sanicms.migrations import (
     info,
     db_manager,
 )
-from .models import User
+from .models import Order
 
 
-class UserMigration(MigrationModel):
-    _model = User
+class OrderMigration(MigrationModel):
+    _model = Order
 
     #  @info(version="v1")
     #  def migrate_v1(self):
@@ -18,7 +18,7 @@ class UserMigration(MigrationModel):
 
 
 def migrations():
-    um = UserMigration()
+    um = OrderMigration()
     try:
         with db_manager.transaction():
             um.auto_migrate()

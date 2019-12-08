@@ -15,17 +15,15 @@ app.blueprint(user_bp)
 @app.listener('before_server_start')
 async def before_srver_start(app, loop):
     # TODO: 改为配置文件读取相关依赖应用服务
-    app.region_client = Client('region-service', app=app)	# service name is APP-ID
-    app.role_client = Client('role-service', app=app)
+    app.user_client = Client('user-service', app=app)
 
 @app.listener('before_server_stop')
 async def before_server_stop(app, loop):
-    app.region_client.close()
-    app.role_client.close()
+    app.user_client.close()
 
 @app.route("/")
 async def index(request):
-    return 'user service Evankao'
+    return 'order service Evankao'
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=app.config['PORT'], debug=True)
