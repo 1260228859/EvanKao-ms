@@ -2,7 +2,7 @@ from sanic import response
 
 import logging
 
-from views import user_bp
+from views import order_bp
 
 from sanicms.server import app
 from sanicms.client import Client
