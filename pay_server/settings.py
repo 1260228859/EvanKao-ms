@@ -3,7 +3,7 @@ import os
 """
 Basic config
 """
-APP_ID = 'merchant-service'
+APP_ID = 'pay-service'
 
 HOST = os.environ.get('SERVER_HOST', None)
 PORT = os.environ.get('SERVER_PORT', 8060)
@@ -18,9 +18,9 @@ DB_CONFIG = {
 
 SWAGGER = {
     'version': '1.0.0',
-    'title': 'merchant API',
-    'description': 'merchant API',
-    'terms_of_service': 'merchant with caution!',
+    'title': 'pay API',
+    'description': 'pay API',
+    'terms_of_service': 'pay with caution!',
     'termsOfService': ['application/json'],
     'contact_email': 'it@example.cn'
 }

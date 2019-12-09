@@ -18,9 +18,9 @@ DB_CONFIG = {
 
 SWAGGER = {
     'version': '1.0.0',
-    'title': 'ORDER API',
-    'description': 'ORDER API',
-    'terms_of_service': 'ORDER with caution!',
+    'title': 'commodity API',
+    'description': 'commodity API',
+    'terms_of_service': 'commodity with caution!',
     'termsOfService': ['application/json'],
     'contact_email': 'it@example.cn'
 }
