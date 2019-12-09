@@ -69,39 +69,107 @@ services:  # 多个容器的集合
     command: ["python", "-m", "server"]
     #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
-#  pay_server:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#      args:
-#        - service=pay_server
-#    links:
-#      - db
-#      - zipkin
-#    volumes:
-#      - "${PWD}/pay_server:/service"
-#      - "${PWD}/sanicms:/service/sanicms"
-#    ports:
-#      - "8070:8070"
-#    networks:
-#      - sanic-network
-#    environment:
-#      POSTGRES_SERVICE_DB_NAME: postgres
-#      POSTGRES_SERVICE_USER: postgres
-#      POSTGRES_SERVICE_HOST: db
-#      POSTGRES_SERVICE_PORT: 5432
-#      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
-#      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
-#      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
-#      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
-#      CONSUL_AGENT_HOST: 'consul'
-#      CONSUL_AGENT_PORT: 8500
-#      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
-#    depends_on:
-#      - "db"
-#      - "role_server"
-#    command: ["python", "-m", "server"]
-#    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
+  pay_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - service=pay_server
+    links:
+      - db
+      - zipkin
+    volumes:
+      - "${PWD}/pay_server:/service"
+      - "${PWD}/sanicms:/service/sanicms"
+    ports:
+      - "8070:8070"
+    networks:
+      - sanic-network
+    environment:
+      POSTGRES_SERVICE_DB_NAME: postgres
+      POSTGRES_SERVICE_USER: postgres
+      POSTGRES_SERVICE_HOST: db
+      POSTGRES_SERVICE_PORT: 5432
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
+      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
+      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
+      CONSUL_AGENT_HOST: 'consul'
+      CONSUL_AGENT_PORT: 8500
+      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
+    depends_on:
+      - "db"
+      - "user_server"
+    command: ["python", "-m", "server"]
+    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
+
+  merchant_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - service=merchant_server
+    links:
+      - db
+      - zipkin
+    volumes:
+      - "${PWD}/merchant_server:/service"
+      - "${PWD}/sanicms:/service/sanicms"
+    ports:
+      - "8080:8080"
+    networks:
+      - sanic-network
+    environment:
+      POSTGRES_SERVICE_DB_NAME: postgres
+      POSTGRES_SERVICE_USER: postgres
+      POSTGRES_SERVICE_HOST: db
+      POSTGRES_SERVICE_PORT: 5432
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
+      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
+      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
+      CONSUL_AGENT_HOST: 'consul'
+      CONSUL_AGENT_PORT: 8500
+      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
+    depends_on:
+      - "db"
+      - "user_server"
+    command: ["python", "-m", "server"]
+    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
+
+  commodity_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - service=commodity_server
+    links:
+      - db
+      - zipkin
+    volumes:
+      - "${PWD}/commodity_server:/service"
+      - "${PWD}/sanicms:/service/sanicms"
+    ports:
+      - "8090:8090"
+    networks:
+      - sanic-network
+    environment:
+      POSTGRES_SERVICE_DB_NAME: postgres
+      POSTGRES_SERVICE_USER: postgres
+      POSTGRES_SERVICE_HOST: db
+      POSTGRES_SERVICE_PORT: 5432
+      ACCESS_CONTROL_ALLOW_ORIGIN: "*"
+      ACCESS_CONTROL_ALLOW_HEADERS: "Content-Type"
+      ACCESS_CONTROL_ALLOW_METHODS: "POST, PUT, DELETE, GET"
+      ZIPKIN_SERVER: 'http://zipkin:9411/api/v1/spans'
+      CONSUL_AGENT_HOST: 'consul'
+      CONSUL_AGENT_PORT: 8500
+      #command: python -m sanic server.app --host=0.0.0.0 --port=8000 --workers=4
+    depends_on:
+      - "db"
+      - "user_server"
+    command: ["python", "-m", "server"]
+    #command: ["python", "-m", 'sanic', "service.server.app", "--workers=4", "--port=8000", "--host=0.0.0.0"]
 
   region_server:
     build: 

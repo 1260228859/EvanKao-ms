@@ -39,3 +39,28 @@ async def get_order(request, id):
         # ]
         # await async_request(datas)
         return records
+
+
+@order_bp.post('/', name="create_user")
+@doc.summary('create order')
+@doc.description('create order info')
+@doc.consumes(Order)
+async def create_user(request):
+    data = request['data']
+    async with request.app.db.transaction(request) as cur:
+        record = await cur.fetchrow(
+            """ INSERT INTO orders(name, age, role_id)
+                VALUES($1, $2, $3)
+                RETURNING id
+            """, data['name'], data['amount_fee'], data['role_id']
+        )
+
+        # TODO:
+        # 发送订单创建事件
+        event_dispatcher = EventDispatcher()
+        event_dispatcher('order_created', {
+            'order': order,
+        })
+
+        return {'id': record['id']}
+
