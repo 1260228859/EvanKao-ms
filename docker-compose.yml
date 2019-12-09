@@ -82,7 +82,7 @@ services:  # 多个容器的集合
       - "${PWD}/pay_server:/service"
       - "${PWD}/sanicms:/service/sanicms"
     ports:
-      - "8070:8070"
+      - "8170:8170"
     networks:
       - sanic-network
     environment:
@@ -150,7 +150,7 @@ services:  # 多个容器的集合
       - "${PWD}/commodity_server:/service"
       - "${PWD}/sanicms:/service/sanicms"
     ports:
-      - "8090:8090"
+      - "8190:8190"
     networks:
       - sanic-network
     environment:
