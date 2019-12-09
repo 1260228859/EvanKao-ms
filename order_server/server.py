@@ -10,7 +10,7 @@ from sanicms.client import Client
 logger = logging.getLogger('sanic')
 
 # add blueprint
-app.blueprint(user_bp)
+app.blueprint(order_bp)
 
 @app.listener('before_server_start')
 async def before_srver_start(app, loop):
