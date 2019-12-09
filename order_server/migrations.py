@@ -6,7 +6,7 @@ from sanicms.migrations import (
     info,
     db_manager,
 )
-from .models import Order
+from models import Order
 
 
 class OrderMigration(MigrationModel):

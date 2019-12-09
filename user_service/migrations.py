@@ -6,7 +6,7 @@ from sanicms.migrations import (
     info,
     db_manager,
 )
-from .models import User
+from models import User
 
 
 class UserMigration(MigrationModel):
