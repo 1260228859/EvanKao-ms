@@ -1,4 +1,4 @@
-# Sanic MicroService Example
+# Sanic MicroService Example by EvanKao
 > Fork from https://github.com/songcser/sanic-ms
 
 ## Usage (@kevinqq)
