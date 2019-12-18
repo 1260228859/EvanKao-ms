@@ -22,7 +22,7 @@ class Client:
         if self._url:
             return
         if self.services:
-            s = random.choice(list(self.services))
+            s = random.choice(list(self.services))  # 随机选择服务链接问题
             print('>>>>>', self.services, s)
             self._url = 'http://{}:{}'.format(s.service_address, s.service_port)
 
