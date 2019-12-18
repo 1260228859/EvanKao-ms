@@ -11,6 +11,8 @@ from sanicms import doc
 from sanicms.redis_status_helps.status import plus_counter, create_order_map
 from sanicms.utils import *
 from sanicms.exception import ServerError
+from nameko.events import EventDispatcher
+from nameko.events import event_handler
 from sanicms.loggers import logger
 from .models import *
 
@@ -26,13 +28,11 @@ async def get_user_by_id(request, id):
         return await res.json()
 
 
-
 @commodity_bp.post('/', name="purchase")
 @doc.summary('商品抢购接口')
 @doc.description('库存增减创建订单')
 @doc.consumes(Commodity)
 async def create_user(request):
-
     res = {
         "status": False,
         "msg": ""
@@ -62,7 +62,6 @@ async def create_user(request):
         res['msg'] = '商品已售毕'
         return res
 
-
     # 判断用户是否存在
     record = await get_user_by_id(request, user_id)
     if not record:
@@ -82,40 +81,24 @@ async def create_user(request):
         create_order_map(order_info)
 
         # 发送商品扣库存成功事件
+        event_dispatcher = EventDispatcher()
+        event_dispatcher('order_created', {
+            'order': order_info,
+        })
 
-        enter_order_queue(order_info)
-
-        enter_overtime_queue(order_info)
         res["status"] = True
-        res["msg"] = "抢购成功，请在15分钟之内付款！"
-        res["order_id"] = str(order_id)
-        return jsonify(res)
+        res["data"] = order_info
+        return res
 
     except Exception as e:
         print("log: ", e)
         res["status"] = False
         res["msg"] = "抢购出错，请重试." + str(e)
-        return jsonify(res), 202
+        return res
 
 
-
-
-
-
-    async with request.app.db.transaction(request) as cur:
-        record = await cur.fetchrow(
-            """ INSERT INTO orders(name, age, role_id)
-                VALUES($1, $2, $3)
-                RETURNING id
-            """, data['name'], data['amount_fee'], data['role_id']
-        )
-
-        # TODO:
-        # 发送订单创建事件
-        event_dispatcher = EventDispatcher()
-        event_dispatcher('order_created', {
-            'order': order,
-        })
-
-        return {'id': record['id']}
-
+@event_handler('orders', 'order_created')
+def handle_order_created(payload):
+    print(payload)
+    order_info =  payload['order']
+    logger.error(f'=====order_info=={order_info}=======')

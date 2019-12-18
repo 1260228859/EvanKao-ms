@@ -9,3 +9,6 @@ opentracing>=2.0.0
 basictracer>=2.2.0
 pyyaml>=3.12
 python-consul==1.0.1
+nameko
+redis
+pika
