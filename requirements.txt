@@ -1,6 +1,6 @@
 bson
-sanic>=0.7.0
 uvloop
+sanic>=0.7.0
 peewee>=3.0.1
 psycopg2>=2.7.1
 asyncpg
