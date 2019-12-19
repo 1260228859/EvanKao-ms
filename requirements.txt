@@ -1,9 +1,9 @@
 bson
 sanic>=0.7.0
-uvloop>=0.8.0
+uvloop
 peewee>=3.0.1
 psycopg2>=2.7.1
-asyncpg>=0.11.0
+asyncpg
 aiohttp>=2.0.7
 opentracing>=2.0.0
 basictracer>=2.2.0
