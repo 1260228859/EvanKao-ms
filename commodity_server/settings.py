@@ -6,7 +6,7 @@ Basic config
 APP_ID = 'commodity-service'
 
 HOST = os.environ.get('SERVER_HOST', None)
-PORT = os.environ.get('SERVER_PORT', 8060)
+PORT = os.environ.get('SERVER_PORT', 8190)
 
 DB_CONFIG = {
     'host':  os.environ.get('POSTGRES_SERVICE_HOST', 'localhost'),
