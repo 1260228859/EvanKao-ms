@@ -4,7 +4,7 @@ ADD requirements.txt /service/
 WORKDIR /service
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-RUN yum install python-devel && yum install libevent-devel
+RUN apt-get install python3-dev && apt-get install libevent-dev
 RUN apk add --no-cache gcc libc-dev git make postgresql-dev \
     && pip install -i 'http://pypi.douban.com/simple' --trusted-host pypi.douban.com -r requirements.txt \
     &&rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache
