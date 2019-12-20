@@ -16,8 +16,9 @@ import pika
 redis_pool = redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, max_connections=512)
 redis_conn = redis.Redis(connection_pool=redis_pool)
 
-
 # 创建rabbitmq连接
+pika.connection.Parameters.DEFAULT_CREDENTIALS = pika.credentials.PlainCredentials('test', "test")
+
 rabbitmq_conn = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT))
 
 """
