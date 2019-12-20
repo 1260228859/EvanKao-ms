@@ -83,7 +83,7 @@ async def create_user(request):
         create_order_map(order_info)
 
         # 发送商品扣库存成功事件
-        event_dispatcher = EventDispatcher()
+        event_dispatcher = EventDispatcher
         event_dispatcher('order_created', {
             'order': order_info,
         })
