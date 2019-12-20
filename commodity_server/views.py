@@ -99,7 +99,7 @@ async def create_user(request):
         return res
 
 
-@event_handler('orders', 'order_created')
+@event_handler('commodity-service', 'order_created')
 def handle_order_created(payload):
     print(payload)
     print('******' * 20)
