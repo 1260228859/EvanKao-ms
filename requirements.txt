@@ -11,3 +11,4 @@ python-consul==1.0.1
 bson
 nameko
 redis
+pika
