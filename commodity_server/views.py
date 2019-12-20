@@ -102,5 +102,6 @@ async def create_user(request):
 @event_handler('orders', 'order_created')
 def handle_order_created(payload):
     print(payload)
+    print('******' * 20)
     order_info =  payload['order']
     logger.error(f'=====order_info=={order_info}=======')
