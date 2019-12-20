@@ -23,7 +23,7 @@ commodity_bp = Blueprint('commodity', url_prefix='commoditys')
 
 @logger()
 async def get_user_by_id(request, id):
-    cli = request.app.role_client.cli(request)
+    cli = request.app.user_client.cli(request)
     async with cli.get('users/{}'.format(id)) as res:
         return await res.json()
 
