@@ -34,6 +34,7 @@ def _default_json_default(obj):
     else:
         return str(obj)
 
+
 class JsonFormatter(logging.Formatter):
     def __init__(self,
                  fmt=None,
