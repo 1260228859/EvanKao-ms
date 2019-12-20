@@ -77,11 +77,13 @@ async def create_user(request):
         "order_id": str(order_id)
     }
     # order_info = str(goods_id) + ',' + str(user_id) + ',' + str(order_id)
+    print(order_info)
+    print('==='*20)
     try:
         create_order_map(order_info)
 
         # 发送商品扣库存成功事件
-        event_dispatcher = EventDispatcher()
+        event_dispatcher = EventDispatcher
         event_dispatcher('order_created', {
             'order': order_info,
         })
