@@ -1,5 +1,5 @@
 version: 1
-disable_existing_logers: False
+disable_existing_logers: True
 formatters:
     verbose:
         format: '%(asctime)s -- %(process)d %(levelname)s %(name)s %(thread)d %(message)s'
