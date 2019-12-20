@@ -14,7 +14,7 @@ from sanicms.exception import ServerError
 from nameko.events import EventDispatcher
 from nameko.events import event_handler
 from sanicms.loggers import logger
-from .models import *
+from models import *
 
 _logger = logging.getLogger('sanic')
 
